@@ -121,3 +121,17 @@ module.exports = router;
 - Parol unutma və sıfırlama funksionallığı mövcuddur.
 - İstifadəçilər öz profillərinə baxa, yeniləyə və silə bilərlər.
 - Admin istifadəçilər bütün istifadəçiləri idarə edə bilərlər.
+
+## API Testi üçün Postman Kolleksiyası > [Postman](https://www.postman.com/team-878/workspace/blogos)
+
+API-ni test etmək üçün Postman kolleksiyası hazırlanmışdır.</br>
+Bu kolleksiya, bütün mövcud API endpoint-lərini əhatə edir və onları test etmək üçün nümunə sorğular təqdim edir.</br>
+Kolleksiyadan istifadə etmək üçün:
+
+1. **Linkə daxil olun**
+2. **Postman hesabınıza daxil olun (və ya yeni hesab yaradın)**
+3. **Kolleksiyanı öz iş sahənizə əlavə edin**
+4. **API-nin host ünvanının və digər lazımi dəyişənlərin təyin olunduğundan əmin olun**
+5. **Sorğuları icra edin və yoxlayın**
+
+Qeyd: API-yə sorğu göndərmədən əvvəl, backend serverin işlək vəziyyətdə olduğundan əmin olun.
