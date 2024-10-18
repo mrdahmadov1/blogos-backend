@@ -1,4 +1,3 @@
-const User = require('../models/userModel');
 const Post = require('../models/postModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('./../utils/catchAsync');
@@ -61,14 +60,14 @@ exports.deletePost = catchAsync(async (req, res, next) => {
     return next(new AppError('No post found with that ID', 404));
   }
 
-  if (post.user._id.toString() !== req.user._id.toString()) {
+  const isOwner = post.user._id.toString() === req.user._id.toString();
+  const isAdmin = req.user.role === 'admin';
+
+  if (!isOwner && !isAdmin) {
     return next(new AppError('You do not have permission to delete this post', 403));
   }
 
-  const updatedPost = await Post.findByIdAndDelete(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  await Post.findByIdAndDelete(req.params.id);
 
   res.status(204).json({
     status: 'success',
