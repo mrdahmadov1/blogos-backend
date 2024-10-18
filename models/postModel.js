@@ -3,7 +3,7 @@ const User = require('./userModel');
 
 const postSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: [true, 'Post must belong to a user'],
@@ -27,22 +27,10 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-postSchema.pre('save', async function (next) {
-  if (!this.isNew) return next();
-
-  const user = await User.findById(this.userId);
-  if (!user) return next(new Error('User not found!'));
-
-  user.posts.push({ postId: this._id, title: this.title });
-  await user.save();
-
-  next();
-});
-
 postSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'userId',
-    select: 'username',
+    path: 'user',
+    select: 'name',
   });
   next();
 });

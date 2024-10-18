@@ -46,19 +46,6 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
-  posts: [
-    {
-      postId: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Post',
-        required: true,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
 });
 
 userSchema.pre('save', async function (next) {
