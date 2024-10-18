@@ -7,12 +7,12 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
 
-// const AppError = require('./utils/appError');
-// const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -43,20 +43,6 @@ app.use(mongoSanitize());
 
 app.use(xss());
 
-// Prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price',
-    ],
-  })
-);
-
 app.use(compression());
 
 // Test middleware
@@ -65,10 +51,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.all('*', (req, res, next) => {
-//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
+app.use('/api/v1/users', userRouter);
 
-// app.use(globalErrorHandler);
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
