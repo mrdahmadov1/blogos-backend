@@ -12,7 +12,7 @@ exports.getPost = factory.getOne(Post);
 exports.createPost = factory.createOne(Post);
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find().select('title createdAt');
+  const posts = await Post.find();
 
   res.status(200).json({
     status: 'success',
@@ -22,7 +22,7 @@ exports.getAllPosts = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyPosts = catchAsync(async (req, res, next) => {
-  const posts = await Post.find({ user: req.user._id }).select('title createdAt');
+  const posts = await Post.find({ user: req.user._id });
 
   res.status(200).json({
     status: 'success',
